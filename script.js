@@ -52,17 +52,15 @@ document.getElementById('subscribeBtn').addEventListener('click', async function
     subscribeBtn.innerHTML = 'Subscribing...';
     messageDiv.innerHTML = '';
 
+    // Prepare the form data
+    const formData = new FormData();
+    formData.append('email', emailInput.value);
+
     try {
-        await fetch(GOOGLE_SCRIPT_URL, {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
-            mode: 'no-cors', // Important for CORS policy
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: emailInput.value,
-                timestamp: new Date().toISOString()
-            })
+            mode: 'no-cors',
+            body: formData
         });
 
         // Show success message
@@ -71,10 +69,9 @@ document.getElementById('subscribeBtn').addEventListener('click', async function
         emailInput.value = '';
 
     } catch (error) {
-        // Show error message
+        console.error('Error:', error);
         messageDiv.innerHTML = 'Something went wrong. Please try again later.';
         messageDiv.className = 'subscription-message error';
-        console.error('Error:', error);
     }
 
     // Reset button state
