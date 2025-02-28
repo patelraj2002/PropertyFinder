@@ -32,7 +32,7 @@ document.querySelector('button').addEventListener('click', function() {
         alert('Please enter a valid email address.');
     }
 });
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZcpCH0wIuobasI_KCtzsnRfpR7Xr6AUf0SKdf8fAS6U_w7cYUEJN54qeser7rzRjH/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzAOYyna2ByzD-4NuJAAULpx9FfU0kb0UHtJaRDWJ_UMBiQCBL5GHZ480daCDaCO5vz/exec';
 
 document.getElementById('subscribeBtn').addEventListener('click', async function() {
     const nameInput = document.getElementById('nameInput');
