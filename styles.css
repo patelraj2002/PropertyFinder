@@ -1,3 +1,4 @@
+/* Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +11,7 @@ body {
     color: #333;
 }
 
+/* Container and Layout */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -17,7 +19,14 @@ body {
     text-align: center;
 }
 
+/* Logo Styles */
 .logo {
+    margin: 20px 0;
+}
+
+.logo img {
+    max-width: 200px;
+    height: auto;
     margin: 20px 0;
 }
 
@@ -34,6 +43,7 @@ body {
     color: #f89f27;
 }
 
+/* Coming Soon Section */
 .coming-soon {
     margin: 50px 0;
 }
@@ -44,6 +54,7 @@ h1 {
     margin-bottom: 20px;
 }
 
+/* Timer Styles */
 .timer {
     display: flex;
     justify-content: center;
@@ -64,6 +75,7 @@ h1 {
     font-weight: bold;
 }
 
+/* Features Section */
 .features {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -83,59 +95,7 @@ h1 {
     margin-bottom: 10px;
 }
 
-.subscribe {
-    margin: 50px 0;
-}
-
-input[type="email"] {
-    padding: 10px;
-    width: 300px;
-    margin-right: 10px;
-    border: 2px solid #194996;
-    border-radius: 5px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #f89f27;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #e08812;
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-    .timer {
-        flex-wrap: wrap;
-    }
-    
-    .timer-box {
-        min-width: 80px;
-    }
-
-    input[type="email"] {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    button {
-        width: 100%;
-    }
-}
-/* Previous CSS styles remain the same, adding new styles below */
-
-.logo img {
-    max-width: 200px;
-    height: auto;
-    margin: 20px 0;
-}
-
+/* Roadmap Section */
 .roadmap {
     margin: 80px 0;
     text-align: left;
@@ -161,6 +121,11 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     position: relative;
     border-left: 4px solid #f89f27;
+    transition: transform 0.3s ease;
+}
+
+.timeline-item:hover {
+    transform: translateX(10px);
 }
 
 .phase {
@@ -193,33 +158,188 @@ button:hover {
     left: 0;
 }
 
-.subscribe-form {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-@media (min-width: 768px) {
-    .subscribe-form {
-        flex-direction: row;
-        justify-content: center;
-    }
-    
-    .timeline-item {
-        margin-left: 20px;
-    }
-}
-
-/* Add hover effect to timeline items */
-.timeline-item:hover {
-    transform: translateX(10px);
+/* Subscribe Section */
+.subscribe {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
 
-/* Additional responsive adjustments */
+.subscribe:hover {
+    transform: translateY(-5px);
+}
+
+.subscribe h2 {
+    color: #194996;
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.subscribe-subtitle {
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+/* Form Styles */
+.subscribe-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: #333;
+    font-weight: 500;
+    font-size: 0.95em;
+    margin-left: 4px;
+}
+
+.form-group input {
+    padding: 12px 16px;
+    border: 2px solid #e1e1e1;
+    border-radius: 10px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+    width: 100%;
+}
+
+.form-group input:focus {
+    border-color: #194996;
+    background: white;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(25, 73, 150, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+/* Submit Button */
+.submit-btn {
+    margin-top: 10px;
+    padding: 14px 28px;
+    background: #f89f27;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.submit-btn:hover {
+    background: #e08812;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(248, 159, 39, 0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.submit-btn.loading {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-text {
+    margin-right: 8px;
+}
+
+.btn-icon {
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+}
+
+.submit-btn:hover .btn-icon {
+    transform: translateX(5px);
+}
+
+/* Message Styles */
+.subscription-message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: slideIn 0.3s ease forwards;
+}
+
+.success {
+    background: #d1f8d1;
+    color: #0a5d0a;
+    border: 1px solid #b7e8b7;
+}
+
+.error {
+    background: #ffe6e6;
+    color: #c70000;
+    border: 1px solid #ffc7c7;
+}
+
+/* Animations */
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Media Queries */
 @media (max-width: 768px) {
+    .timer {
+        flex-wrap: wrap;
+    }
+    
+    .timer-box {
+        min-width: 80px;
+    }
+    
+    .subscribe {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .subscribe h2 {
+        font-size: 1.8em;
+    }
+
+    .subscribe-subtitle {
+        font-size: 1em;
+    }
+
+    .submit-btn {
+        padding: 12px 24px;
+        font-size: 1em;
+    }
+    
     .roadmap {
         padding: 0 20px;
     }
@@ -228,94 +348,9 @@ button:hover {
         margin-left: 0;
     }
 }
-.subscription-message {
-    margin-top: 15px;
-    padding: 10px;
-    border-radius: 5px;
-    display: none;
-}
 
-.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    display: block;
-}
-
-.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-    display: block;
-}
-
-.subscribe-form input[type="email"] {
-    padding: 12px;
-    border: 2px solid #194996;
-    border-radius: 5px;
-    width: 300px;
-    font-size: 16px;
-}
-
-.subscribe-form button {
-    padding: 12px 24px;
-    background-color: #f89f27;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-.subscribe-form button:hover {
-    background-color: #e08812;
-}
-
-.subscribe-form button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
-.subscribe-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.subscribe-form input {
-    padding: 12px;
-    border: 2px solid #194996;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.subscribe-form button {
-    padding: 12px 24px;
-    background-color: #f89f27;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-.subscription-message {
-    margin-top: 15px;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+@media (min-width: 768px) {
+    .timeline-item {
+        margin-left: 20px;
+    }
 }

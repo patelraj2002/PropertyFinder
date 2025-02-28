@@ -1,4 +1,4 @@
-// Set the launch date (example: 30 days from now)
+// Set the launch date to March 14, 2025, 17:00:00
 const launchDate = new Date('2025-03-14T17:00:00').getTime();
 
 // Update the countdown every second
@@ -18,93 +18,120 @@ const countdown = setInterval(function() {
 
     if (distance < 0) {
         clearInterval(countdown);
-        document.getElementById("timer").innerHTML = "LAUNCHED!";
+        document.getElementById("days").innerHTML = "00";
+        document.getElementById("hours").innerHTML = "00";
+        document.getElementById("minutes").innerHTML = "00";
+        document.getElementById("seconds").innerHTML = "00";
+        document.querySelector('.coming-soon h1').innerHTML = "We Are Live!";
     }
 }, 1000);
 
-// Optional: Add email subscription functionality
-document.querySelector('button').addEventListener('click', function() {
-    const email = document.querySelector('input[type="email"]').value;
-    if (email) {
-        // Add your email subscription logic here
-        alert('Thank you for subscribing! We will notify you when we launch.');
-    } else {
-        alert('Please enter a valid email address.');
-    }
-});
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzAOYyna2ByzD-4NuJAAULpx9FfU0kb0UHtJaRDWJ_UMBiQCBL5GHZ480daCDaCO5vz/exec';
+// Form submission handling
+const scriptURL = 'https://script.google.com/macros/s/AKfycbx9f1yjsezIwXCbqzMizTdi1LrIpnjKzwworZ_hJ2JyYrNLEShwzpbNC0j4AxeigRky/exec';
+const form = document.forms['submit-to-google-sheet'];
+const msg = document.getElementById("subscriptionMessage");
+const submitBtn = form.querySelector('.submit-btn');
+const btnText = submitBtn.querySelector('.btn-text');
+const btnIcon = submitBtn.querySelector('.btn-icon');
 
-document.getElementById('subscribeBtn').addEventListener('click', async function() {
-    const nameInput = document.getElementById('nameInput');
-    const emailInput = document.getElementById('emailInput');
-    const whatsappInput = document.getElementById('whatsappInput');
-    const messageDiv = document.getElementById('subscriptionMessage');
-    const subscribeBtn = this;
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    
+    // Form validation
+    const nameInput = form.querySelector('input[name="Name"]');
+    const emailInput = form.querySelector('input[name="Email"]');
+    const whatsappInput = form.querySelector('input[name="WhatsApp_number"]');
 
-    // Validation
+    // Basic validation
     if (!nameInput.value.trim()) {
-        messageDiv.innerHTML = 'Please enter your name';
-        messageDiv.className = 'subscription-message error';
+        showMessage("Please enter your name", "error");
         return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailInput.value)) {
-        messageDiv.innerHTML = 'Please enter a valid email address';
-        messageDiv.className = 'subscription-message error';
+        showMessage("Please enter a valid email address", "error");
         return;
     }
 
     const whatsappRegex = /^\d{10}$/;
     if (!whatsappRegex.test(whatsappInput.value)) {
-        messageDiv.innerHTML = 'Please enter a valid 10-digit WhatsApp number';
-        messageDiv.className = 'subscription-message error';
+        showMessage("Please enter a valid 10-digit WhatsApp number", "error");
         return;
     }
 
     // Show loading state
-    subscribeBtn.disabled = true;
-    subscribeBtn.innerHTML = 'Subscribing...';
-    messageDiv.innerHTML = '';
+    submitBtn.classList.add('loading');
+    btnText.textContent = 'Subscribing...';
+    btnIcon.textContent = '↻';
+    msg.innerHTML = '';
 
-    // Create URL parameters
-    const formData = new URLSearchParams({
-        name: nameInput.value.trim(),
-        email: emailInput.value.trim(),
-        whatsapp: whatsappInput.value.trim()
+    fetch(scriptURL, { 
+        method: 'POST', 
+        body: new FormData(form)
+    })
+    .then(response => {
+        showMessage("Thank you for subscribing! We'll keep you updated.", "success");
+        form.reset();
+        
+        // Auto hide message after 5 seconds
+        setTimeout(() => {
+            msg.style.opacity = '0';
+            setTimeout(() => {
+                msg.innerHTML = '';
+                msg.style.opacity = '1';
+            }, 300);
+        }, 5000);
+    })
+    .catch(error => {
+        showMessage("Something went wrong. Please try again later.", "error");
+        console.error('Error!', error.message);
+    })
+    .finally(() => {
+        submitBtn.classList.remove('loading');
+        btnText.textContent = 'Notify Me';
+        btnIcon.textContent = '→';
+    });
+});
+
+// Helper function to show messages
+function showMessage(text, type) {
+    msg.innerHTML = text;
+    msg.className = `subscription-message ${type}`;
+    msg.style.opacity = '1';
+}
+
+// Input validation feedback
+const inputs = form.querySelectorAll('input');
+inputs.forEach(input => {
+    // Show validation feedback when form submission is attempted
+    input.addEventListener('invalid', (e) => {
+        e.preventDefault();
+        input.classList.add('error');
+    });
+    
+    // Remove error class when user starts typing
+    input.addEventListener('input', () => {
+        input.classList.remove('error');
     });
 
-    try {
-        console.log('Sending data to:', GOOGLE_SCRIPT_URL);
-        console.log('Data:', formData.toString());
+    // Remove error class when input is focused
+    input.addEventListener('focus', () => {
+        input.classList.remove('error');
+    });
+});
 
-        // Use fetch with URLSearchParams
-        const response = await fetch(`${GOOGLE_SCRIPT_URL}?${formData.toString()}`, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
+// Optional: Smooth scroll to form when "Get Early Access" is clicked
+document.querySelectorAll('a[href="#subscribe"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
         });
+    });
+});
 
-        console.log('Response received');
-        
-        // Show success message
-        messageDiv.innerHTML = 'Thank you for subscribing! We\'ll keep you updated.';
-        messageDiv.className = 'subscription-message success';
-        
-        // Clear inputs
-        nameInput.value = '';
-        emailInput.value = '';
-        whatsappInput.value = '';
-
-    } catch (error) {
-        console.error('Error:', error);
-        messageDiv.innerHTML = 'Something went wrong. Please try again later.';
-        messageDiv.className = 'subscription-message error';
-    }
-
-    // Reset button state
-    subscribeBtn.disabled = false;
-    subscribeBtn.innerHTML = 'Notify Me';
+// Optional: Add loading animation to the countdown
+window.addEventListener('load', () => {
+    document.querySelector('.timer').style.opacity = '1';
 });
