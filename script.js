@@ -1,28 +1,31 @@
-// Set the launch date to March 14, 2025, 17:00:00
-const launchDate = new Date('2025-03-20T17:00:00').getTime();
+// Set the launch date to March 20, 2025, 17:00:00 (in UTC)
+const launchDate = new Date('2025-03-20T17:00:00Z').getTime(); // Ensure it's in UTC
 
 // Update the countdown every second
 const countdown = setInterval(function() {
-    const now = new Date().getTime();
+    const now = new Date().getTime(); // Get the current date and time in local time zone
     const distance = launchDate - now;
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
-    document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
-    document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
-    document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
-
+    // Check if the distance is negative, meaning the event time has passed
     if (distance < 0) {
-        clearInterval(countdown);
+        clearInterval(countdown); // Stop the countdown
         document.getElementById("days").innerHTML = "00";
         document.getElementById("hours").innerHTML = "00";
         document.getElementById("minutes").innerHTML = "00";
         document.getElementById("seconds").innerHTML = "00";
         document.querySelector('.coming-soon h1').innerHTML = "We Are Live!";
+    } else {
+        // Calculate days, hours, minutes, and seconds
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Update the countdown display
+        document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+        document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+        document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+        document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
     }
 }, 1000);
 
